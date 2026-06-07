@@ -155,7 +155,9 @@ $$Q = X \cdot W_Q, \quad K = X \cdot W_K, \quad V = X \cdot W_V$$
 
 Attention 的核心公式：
 
-$$	ext{Attention}(Q, K, V) = 	ext{softmax}\left(rac{QK^T}{\sqrt{d_k}}ight)V$$
+$$\text{MultiHead}(Q, K, V) = \text{Concat}(\text{head}_1, \ldots, \text{head}_h) \cdot W^O$$
+
+$$\text{head}_i = \text{Attention}(Q \cdot W_i^Q, K \cdot W_i^K, V \cdot W_i^V)$$
 
 **拆解**：
 1. **$QK^T$**：计算相似度。结果是一个 $n 	imes n$ 的矩阵，每个元素 $(i,j)$ 表示第 $i$ 个词和第 $j$ 个词的相似度
@@ -206,7 +208,7 @@ Attention 有一个特点：**它对输入的顺序不敏感**。无论"我喜�
 
 原始 Transformer 使用**正弦/余弦函数**生成位置编码：
 
-$$PE_{(pos, 2i)} = \sin\left(rac{pos}{10000^{2i/d_{model}}}ight), \quad PE_{(pos, 2i+1)} = \cos\left(rac{pos}{10000^{2i/d_{model}}}ight)$$
+$$PE_{(pos, 2i)} = \sin\left(\frac{pos}{10000^{2i/d_{model}}}\right), \quad PE_{(pos, 2i+1)} = \cos\left(\frac{pos}{10000^{2i/d_{model}}}\right)$$
 
 选择正弦/余弦的原因：
 1. **唯一性**：每个位置都有唯一编码
@@ -222,8 +224,7 @@ Transformer 是深层网络（原始 12 层，现代版本可能 96 层甚至更
 
 **残差连接（Residual Connection）**：在子层的输入和输出之间加一条"捷径"，让输出等于输入加上子层的变换结果：
 
-$$	ext{Output} = 	ext{LayerNorm}(x + 	ext{Sublayer}(x))$$
-
+$$\text{Output} = \text{LayerNorm}(x + \text{Sublayer}(x))$$
 这保证了即使网络很深，梯度也能顺利从深层传回浅层。
 
 **层归一化（Layer Normalization, LN）**：对每个样本的特征维度进行归一化，使其均值为 0、方差为 1，稳定训练过程。
@@ -236,8 +237,7 @@ $$	ext{Output} = 	ext{LayerNorm}(x + 	ext{Sublayer}(x))$$
 
 原始 Transformer 的 FFN 由两个线性变换层和一个 ReLU 激活函数组成：
 
-$$	ext{FFN}(x) = \max(0, x \cdot W_1 + b_1) \cdot W_2 + b_2$$
-
+$$\text{FFN}(x) = \max(0, x \cdot W_1 + b_1) \cdot W_2 + b_2$$
 FFN 的特点是**对每个位置独立处理，位置之间没有信息交互**。信息交流的工作完全交给 Attention，这种分工明确是 Transformer 成功的关键之一。
 
 FFN 的中间层维度通常是输入/输出维度的 4 倍（例如模型维度 512，FFN 中间维度 2048）。

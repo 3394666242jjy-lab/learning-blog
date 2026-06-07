@@ -30,7 +30,7 @@
 
   Transformer遵循这种总体架构，对编码器和解码器都使用堆叠的自注意力和逐点全连接层，分别如图1的左半部分和右半部分所示。
 
-<img src="C:\Users\33946\AppData\Roaming\Typora\typora-user-images\image-20260607164916681.png" alt="image-20260607164916681" style="zoom:50%;" />
+<img src="./assets/images/image-20260607164916681.pngimage-20260607164916681.png" alt="image-20260607164916681" style="zoom:50%;" />
 
 ### 3.1 Encoder and Decoder Stacks
 

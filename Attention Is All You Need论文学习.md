@@ -129,7 +129,7 @@ $$
 
   模型用**学习到的嵌入**把输入和输出的 token 都映射成512维向量；解码器输出的向量再经过**学习到的线性变换**和 **softmax** 变成下一个 token 的概率。为了省参数和保持一致性，**输入嵌入、输出嵌入、softmax前的线性层**这三者共享**同一个权重矩阵**。另外，嵌入层的权重还要先乘以√dmodel，避免被位置编码"淹没"
 
-![image-20260607174316729](C:\Users\33946\AppData\Roaming\Typora\typora-user-images\image-20260607174316729.png)
+<img src="./assets/images/image-20260607174316729.png" />
 
 ### 3.5 Positional Encoding
 
@@ -170,7 +170,7 @@ $$
 
 ## 6.2 模型变体（Model Variations）—— 消融实验
 
-这是整篇论文**最硬核的论证**之一。作者在英德翻译开发集（newstest2013）上，把 base 模型的各个组件逐一"拆掉"或"改动"，看性能怎么变。结果在 **Table 3**：![image-20260607181150722](C:\Users\33946\AppData\Roaming\Typora\typora-user-images\image-20260607181150722.png)
+这是整篇论文**最硬核的论证**之一。作者在英德翻译开发集（newstest2013）上，把 base 模型的各个组件逐一"拆掉"或"改动"，看性能怎么变。结果在 **Table 3**：<img src="./assets/images/image-20260607181150722.png" />
 
   多头注意力确实有用，但**不是越多越好**。头数太多导致每个头的维度 *d**k*  太小（32维甚至16维），"分辨率"不够，反而学不好。
 
@@ -185,7 +185,7 @@ $$
 1. 尽管**完全没有任务特定的精细调参**，Transformer 表现仍然惊人
 2. WSJ only  setting：F1 91.3，仅次于专门设计的 RNN Grammar（91.7），**超过了 BerkeleyParser**
 3. Semi-supervised：F1 92.7，**超过所有之前的半监督模型**
-4. 特别地，RNN 序列到序列模型在这个任务上表现很差，而 Transformer **轻松超越**![image-20260607181401999](C:\Users\33946\AppData\Roaming\Typora\typora-user-images\image-20260607181401999.png)
+4. 特别地，RNN 序列到序列模型在这个任务上表现很差，而 Transformer **轻松超越**!<img src="./assets/images/image-20260607181401999.png" />
 
 ## 7 Conclusion
 
